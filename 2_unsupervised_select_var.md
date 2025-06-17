@@ -15,13 +15,7 @@
 
 ##### Script: Seleção de Variáveis
 
-##### Descrição: Este script carrega um shapefile de pontos contendo informações
-
-##### numéricas extraídas de uma série de imagens raster (covariáveis).
-
-##### As estratégias utilizadas foram: remoção das variáveis altamente
-
-##### correlacionadas e das covariáveis com variância zero ou próxima de zero.
+##### Descrição: Este script carrega um shapefile de pontos contendo informações numéricas extraídas de uma série de imagens raster (covariáveis). As estratégias utilizadas foram: remoção das variáveis altamente correlacionadas e das covariáveis com variância zero ou próxima de zero.
 
 <br>
 
