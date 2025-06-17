@@ -26,12 +26,9 @@
 rm(list = ls(all.names = TRUE))
 
 # Carregar bibliotecas necessárias
-#library(janitor)   # Para normalização de nomes
-#library(stringr)   # Para manipulação de strings
 library(terra)     # Para manipulação de dados raster e vetoriais
 library(dplyr)     # Para manipulação de dados
 library(caret)
-#library(tidyterra) # Para manipulação de dados terra
 ```
 
 ``` r
