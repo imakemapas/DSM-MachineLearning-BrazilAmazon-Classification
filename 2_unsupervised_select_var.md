@@ -30,7 +30,7 @@ library(terra)     # Para manipulação de dados raster e vetoriais
 library(dplyr)     # Para manipulação de dados
 library(caret)
 ```
-
+#### 2. Importar dados ———————————————————————-
 ``` r
 # Carregar o arquivo .RData com os dados extraídos na etapa anterior
 load("../data/dados_extract.RData")
@@ -126,14 +126,14 @@ str(dfextract)
     ##  $ zonasalt  : num  1.69 1.69 1.79 1.79 1.64 ...
     ##  $ id        : int  1 2 3 4 5 6 7 8 9 10 ...
 
-#### 5. Separação do Dataframe em Variáveis Alvo (y) e Co-Variáveis (x) ——-
+#### 3. Separação do Dataframe em Variáveis Alvo (y) e Co-Variáveis (x) ——-
 
 ``` r
 dfy <- dplyr::select(dfextract, any_of(c("id", "geol")), 1:5)      # Variáveis alvo, id, xy e cov factor
 dfx <- dfextract |> dplyr::select(-dplyr::all_of(names(dfy)), id)  # demais covariáveis
 ```
 
-#### 6. Detecção de Variáveis com Variância Zero ou Quase Zero —————-
+#### 4. Detecção de Variáveis com Variância Zero ou Quase Zero —————-
 
 ``` r
 nzv <- caret::nearZeroVar(dfx, names = TRUE)
@@ -148,7 +148,7 @@ if (length(nzv) > 0) {
 
     ## [1] "Eliminadas por variância zero ou próximo de zero: hl, hl_idx, slp_idx, vly, vly_idx"
 
-#### 7. Detecção de Variáveis Altamente Correlacionadas ———————-
+#### 5. Detecção de Variáveis Altamente Correlacionadas ———————-
 
 ``` r
 limiar_correl <- 0.95  # Limiar de correlação para remoção de variáveis
@@ -187,7 +187,7 @@ dev.off()
     ## png 
     ##   2
 
-#### 8. Remoção de Variáveis Altamente Correlacionadas ———————–
+#### 6. Remoção de Variáveis Altamente Correlacionadas ———————–
 
 ``` r
 dfcor <- dfnz
@@ -201,7 +201,7 @@ if (length(vc) > 0) {
 
     ## [1] "Eliminadas por serem altamente correlacionadas: ndvi, savi, b8, b7, frc_oxi, frc_oxs, frc_fe, frc_iro, tpi, mass_bal, claymine, frs_si, lat, later, mrvbf, frsia, real_sur, slp_degr, ter_ru, crv_tota, crv_cros, crv_long, gss_ast, rug_idx, rvi_idx"
 
-#### 9. Criação do Dataframe Final ——————————————-
+#### 7. Criação do Dataframe Final ——————————————-
 
 ``` r
 # Combina as variáveis alvo (y) e as co-variáveis (x) limpas
