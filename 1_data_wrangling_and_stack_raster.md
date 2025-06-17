@@ -13,11 +13,7 @@
 
 <br>
 
-##### Descrição: Este script renomeia os metadados dos rasters, reprojeta e aplica máscara
-
-##### usando um shapefile de limite, extrai valores de rasters para pontos,
-
-##### e prepara os dados para análise posterior, incluindo a limpeza de dados
+##### Descrição: Este script renomeia os metadados dos rasters, reprojeta e aplica máscara usando um shapefile de limite, extrai valores de rasters para pontos, e prepara os dados para análise posterior, incluindo a limpeza de dados
 
 <br>
 
