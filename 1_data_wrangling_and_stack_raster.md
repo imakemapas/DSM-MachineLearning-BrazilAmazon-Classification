@@ -311,6 +311,10 @@ st <- terra::rast(raster_files_stack)
 
 # Verifica os nomes das camadas
 print(names(st))
+
+# === Transforma a camada geológica em fator com níveis definidos ===
+st[["geol"]] <- as.factor(st[["geol"]])
+unique(st$geol)
 ```
 
     ##  [1] "asp"      "ast_frc"  "b11"      "b12"      "b2"       "b3"       "b4"       "b5"       "b6"       "b7"       "b8"       "b8a"     
@@ -320,6 +324,14 @@ print(names(st))
     ## [49] "mid_slp"  "mrrtf"    "mrvbf"    "ndvi"     "nrm"      "real_sur" "rug_idx"  "rvi_idx"  "saga_wet" "savi"     "sfc_sp"   "slp_degr"
     ## [61] "slp_heig" "slp_idx"  "standard" "ter_ru"   "ter_su"   "tpi"      "tst"      "twi"      "vec_rug"  "vly"      "vly_dep"  "vly_idx" 
     ## [73] "vrt_h"    "vv"       "zonasalt"
+
+    geol
+    <chr>
+    1	  0			
+    16	1			
+    34	2			
+    55	3			
+    76	4
 
 #### 6. Extrair Valores dos Rasters para os Pontos —————————
 
