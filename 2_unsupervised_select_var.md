@@ -1,3 +1,7 @@
+Untitled
+================
+Theresa R P Barbosa
+2025-06-25
 
 #### 🌍 ─────────────────────────────────────────────── 🌍
 
@@ -7,7 +11,7 @@
 
 #### 🌍 <imakemapas@outlook.com.br> \| +55 24 998417085
 
-#### 🌍 2025-06-16
+#### 🌍 2025-06-25
 
 #### 🌍 ─────────────────────────────────────────────── 🌍
 
@@ -15,7 +19,13 @@
 
 ##### Script: Seleção de Variáveis
 
-##### Descrição: Este script carrega um shapefile de pontos contendo informações numéricas extraídas de uma série de imagens raster (covariáveis). As estratégias utilizadas foram: remoção das variáveis altamente correlacionadas e das covariáveis com variância zero ou próxima de zero.
+##### Descrição: Este script carrega um shapefile de pontos contendo informações
+
+##### numéricas extraídas de uma série de imagens raster (covariáveis).
+
+##### As estratégias utilizadas foram: remoção das variáveis altamente
+
+##### correlacionadas e das covariáveis com variância zero ou próxima de zero.
 
 <br>
 
@@ -30,7 +40,11 @@ library(terra)     # Para manipulação de dados raster e vetoriais
 library(dplyr)     # Para manipulação de dados
 library(caret)
 ```
-#### 2. Importar dados ———————————————————————-
+
+    ## Carregando pacotes exigidos: ggplot2
+
+    ## Carregando pacotes exigidos: lattice
+
 ``` r
 # Carregar o arquivo .RData com os dados extraídos na etapa anterior
 load("../data/dados_extract.RData")
@@ -44,12 +58,10 @@ dfextract <- dfextract |>
 str(dfextract)
 ```
 
-    ## 'data.frame':    657 obs. of  80 variables:
+    ## 'data.frame':    657 obs. of  77 variables:
     ##  $ Subclasses: Factor w/ 4 levels "laterite","marginal lake",..: 4 4 4 4 4 4 4 4 4 4 ...
     ##  $ x         : num  758370 758370 760370 760370 760370 ...
     ##  $ y         : num  31610 31590 29470 29450 29430 ...
-    ##  $ Lat       : num  758370 758370 760370 760370 760370 ...
-    ##  $ Long      : num  1e+07 1e+07 1e+07 1e+07 1e+07 ...
     ##  $ ast_frc   : num  1.9 1.88 2 1.93 1.93 ...
     ##  $ b11       : num  0.171 0.171 0.183 0.183 0.185 ...
     ##  $ b12       : num  0.0732 0.0732 0.079 0.079 0.0793 ...
@@ -87,13 +99,12 @@ str(dfextract)
     ##  $ frs_si    : num  0.429 0.429 0.433 0.433 0.429 ...
     ##  $ frsia     : num  2.15 2.15 2.02 2.02 2.19 ...
     ##  $ frssil    : num  0.429 0.429 0.433 0.433 0.429 ...
-    ##  $ geol      : Factor w/ 39 levels "1","2","2.02490496635437",..: 2 2 1 1 1 1 1 1 1 1 ...
+    ##  $ geol      : Factor w/ 5 levels "1","2","3","4",..: 2 2 1 1 1 1 1 1 1 1 ...
     ##  $ goethita  : num  1.8 1.8 1.75 1.75 1.75 ...
     ##  $ gss_ast   : num  0.604 0.618 0.591 0.618 0.607 ...
     ##  $ hl        : num  0 0 0 0 0 0 0 0 0 0 ...
     ##  $ hl_idx    : num  0 0 0 0 0 0 0 0 0 0 ...
     ##  $ indice_l  : num  2.01 1.12 1.89 4.01 2.9 ...
-    ##  $ lat       : num  2.33 2.33 2.31 2.31 2.33 ...
     ##  $ later     : num  2.33 2.33 2.31 2.31 2.33 ...
     ##  $ lsf       : num  4.31e-02 1.89e-02 6.67e-05 7.90e-05 1.27e-04 ...
     ##  $ mass_bal  : num  0.00924 0.02032 -0.04901 -0.04766 -0.04166 ...
@@ -126,14 +137,14 @@ str(dfextract)
     ##  $ zonasalt  : num  1.69 1.69 1.79 1.79 1.64 ...
     ##  $ id        : int  1 2 3 4 5 6 7 8 9 10 ...
 
-#### 3. Separação do Dataframe em Variáveis Alvo (y) e Co-Variáveis (x) ——-
+#### 2. Separação do Dataframe em Variáveis Alvo (y) e Co-Variáveis (x) ——-
 
 ``` r
 dfy <- dplyr::select(dfextract, any_of(c("id", "geol")), 1:5)      # Variáveis alvo, id, xy e cov factor
 dfx <- dfextract |> dplyr::select(-dplyr::all_of(names(dfy)), id)  # demais covariáveis
 ```
 
-#### 4. Detecção de Variáveis com Variância Zero ou Quase Zero —————-
+#### 3. Detecção de Variáveis com Variância Zero ou Quase Zero —————-
 
 ``` r
 nzv <- caret::nearZeroVar(dfx, names = TRUE)
@@ -148,7 +159,7 @@ if (length(nzv) > 0) {
 
     ## [1] "Eliminadas por variância zero ou próximo de zero: hl, hl_idx, slp_idx, vly, vly_idx"
 
-#### 5. Detecção de Variáveis Altamente Correlacionadas ———————-
+#### 4. Detecção de Variáveis Altamente Correlacionadas ———————-
 
 ``` r
 limiar_correl <- 0.95  # Limiar de correlação para remoção de variáveis
@@ -167,16 +178,15 @@ vc <- caret::findCorrelation(x = mcor, cutoff = limiar_correl, names = TRUE)
 corrplot::corrplot(mcor, method = "circle", tl.col = "black", mar = c(0, 0, 5, 0))
 ```
 
-![](2_unsupervised_select_var_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](2_unsupervised_select_var_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 # Mostra as variáveis altamente correlacionadas
 print(vc)
 ```
 
-    ##  [1] "ndvi"     "savi"     "b8"       "b7"       "frc_oxi"  "frc_oxs"  "frc_fe"   "frc_iro"  "tpi"      "mass_bal" "claymine" "frs_si"  
-    ## [13] "lat"      "later"    "mrvbf"    "frsia"    "real_sur" "slp_degr" "ter_ru"   "crv_tota" "crv_cros" "crv_long" "gss_ast"  "rug_idx" 
-    ## [25] "rvi_idx"
+    ##  [1] "ndvi"     "savi"     "b8"       "b7"       "frc_oxi"  "frc_oxs"  "tpi"      "mass_bal" "frc_fe"   "frc_iro"  "mrvbf"    "claymine" "frssil"   "later"    "frsia"    "real_sur" "slp_degr"
+    ## [18] "ter_ru"   "crv_cros" "crv_tota" "crv_long" "gss_ast"  "rug_idx"  "rvi_idx"
 
 ``` r
 png(filename = "matriz_correlacao.png", width = 1200, height = 1200)
@@ -187,7 +197,7 @@ dev.off()
     ## png 
     ##   2
 
-#### 6. Remoção de Variáveis Altamente Correlacionadas ———————–
+#### 5. Remoção de Variáveis Altamente Correlacionadas ———————–
 
 ``` r
 dfcor <- dfnz
@@ -199,9 +209,9 @@ if (length(vc) > 0) {
 }
 ```
 
-    ## [1] "Eliminadas por serem altamente correlacionadas: ndvi, savi, b8, b7, frc_oxi, frc_oxs, frc_fe, frc_iro, tpi, mass_bal, claymine, frs_si, lat, later, mrvbf, frsia, real_sur, slp_degr, ter_ru, crv_tota, crv_cros, crv_long, gss_ast, rug_idx, rvi_idx"
+    ## [1] "Eliminadas por serem altamente correlacionadas: ndvi, savi, b8, b7, frc_oxi, frc_oxs, tpi, mass_bal, frc_fe, frc_iro, mrvbf, claymine, frssil, later, frsia, real_sur, slp_degr, ter_ru, crv_cros, crv_tota, crv_long, gss_ast, rug_idx, rvi_idx"
 
-#### 7. Criação do Dataframe Final ——————————————-
+#### 6. Criação do Dataframe Final ——————————————-
 
 ``` r
 # Combina as variáveis alvo (y) e as co-variáveis (x) limpas
