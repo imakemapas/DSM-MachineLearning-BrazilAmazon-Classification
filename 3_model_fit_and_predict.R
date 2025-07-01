@@ -186,6 +186,8 @@ for (j in seq_along(modelos_train)) {
     # Validação Geral
     vp <- predict(model_fit, teste) 
     vm <- caret::confusionMatrix(vp, teste[,1])
+    save(vm$table, 
+         file = paste0(fp, "/confusionMatrix_", modelos_train[j], "_", pad3(k), ".RData"))
     # Validação por Classe
     by_class_metrics <- vm$byClass
     save(by_class_metrics, 
