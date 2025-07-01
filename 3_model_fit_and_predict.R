@@ -224,6 +224,7 @@ for (j in seq_along(modelos_train)) {
     # Mapa Pedito
     dft_pred <- dft_scaled |> dplyr::filter(!if_any(all_of(names(dfx)), is.na))
     va       <- predict(model_fit, dft_pred)
+    va       <- factor(va, levels = levels(dfxy[,1]))
     dat1     <- data.frame(x = dft_pred$x, y = dft_pred$y, z = as.integer(va))
     mapa     <- terra::rast(dat1, type = "xyz", crs = terra::crs(r))
     writeRaster(x = mapa, 
